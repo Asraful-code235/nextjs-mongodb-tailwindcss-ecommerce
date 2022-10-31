@@ -5,34 +5,36 @@ import React from 'react';
 
 const ProductItem = ({ product }) => {
   return (
-    <Link
-      href={`/product/${product.slug}`}
-      className="flex  flex-col  shadow-none hover:shadow-md   items-center overflow-hidden"
-    >
-      <div className="card card-compact w-[250px] h-[410px] bg-base-100  ">
-        <figure>
-          <Link href={`/product/${product.slug}`}>
-            <img
-              src={product.image}
-              alt={product.name}
-              // alt="Shoes"
-              className="rounded shadow-sm  h-52 "
-            />
-          </Link>
-        </figure>
-        <div className="card-body">
-          <Link href={`/product/${product.slug}`}>
-            <h2 className="card-title">{product.name}</h2>
-          </Link>
-          <p className="">{product.brand}</p>
-          <p>${product.price}</p>
+    <>
+      <Link
+        href={`/product/${product.slug}`}
+        className="flex  flex-col border  shadow-none hover:shadow-md   items-center overflow-hidden"
+      >
+        <div className="card card-compact  w-[250px] h-[410px] bg-base-100  ">
+          <figure>
+            <div>
+              <img
+                src={product.image}
+                alt={product.name}
+                // alt="Shoes"
+                className="rounded shadow-sm  h-52 "
+              />
+            </div>
+          </figure>
+          <div className="card-body">
+            <div>
+              <h2 className="card-title">{product.name}</h2>
+            </div>
+            <p className="">{product.brand}</p>
+            <p>${product.price}</p>
 
-          <div className="card-actions justify-end">
-            <button className="btn btn-primary">Buy Now</button>
+            <div className="card-actions justify-end">
+              <button className="btn btn-primary">Buy Now</button>
+            </div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </>
   );
 };
 

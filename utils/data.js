@@ -49,7 +49,7 @@ const data = {
       brand: 'Oliver',
       rating: 2.5,
       numReviews: 13,
-      countInStock: 20,
+      countInStock: 4,
       description: 'A popular shirt',
     },
   ],

@@ -4,9 +4,9 @@ import data from '../utils/data';
 
 export default function Home() {
   return (
-    <Layout title={'Home Page'}>
+    <Layout title={'Home_Page'}>
       <div className="flex justify-center items-center">
-        <div className="flex flex-wrap justify-start items-center gap-4  ">
+        <div className="flex flex-wrap justify-start items-center gap-2  ">
           {data.product.map((product) => (
             <ProductItem product={product} key={product.slug} />
           ))}
