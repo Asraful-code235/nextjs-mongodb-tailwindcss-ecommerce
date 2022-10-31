@@ -5,8 +5,11 @@ import React from 'react';
 
 const ProductItem = ({ product }) => {
   return (
-    <div className="flex shadow-md flex-col   items-center overflow-hidden">
-      <div className="card card-compact w-64 h-auto bg-base-100 shadow-xl">
+    <Link
+      href={`/product/${product.slug}`}
+      className="flex  flex-col  shadow-none hover:shadow-md   items-center overflow-hidden"
+    >
+      <div className="card card-compact w-[250px] h-[410px] bg-base-100  ">
         <figure>
           <Link href={`/product/${product.slug}`}>
             <img
@@ -29,7 +32,7 @@ const ProductItem = ({ product }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
