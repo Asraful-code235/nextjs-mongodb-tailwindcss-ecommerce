@@ -57,7 +57,7 @@ const Navbar = () => {
                 </span>
                 <span className="text-info">Subtotal: $999</span>
                 <Menu.Item as={'div'} className="card-actions">
-                  <Link href={'/cart'}>
+                  <Link href={'/carts'}>
                     <button className="btn btn-primary btn-block">
                       View cart
                     </button>

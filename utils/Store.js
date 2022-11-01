@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react';
+import { createContext, startTransition, useReducer } from 'react';
 
 export const Store = createContext();
 
@@ -18,6 +18,12 @@ function reducer(state, action) {
           )
         : [...state.cart.cartItems, newItem];
       return { ...state, cart: { ...state.cart, cartItems } };
+    }
+    case 'CART_REMOVE_ITEM': {
+      const cartItems = state.cart.cartItems.filter(
+        (item) => item.slug !== action.payload.slug
+      );
+      return { ...state, cart: { ...startTransition.cart, cartItems } };
     }
     default:
       return state;
