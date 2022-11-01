@@ -47,7 +47,6 @@ const CartScreen = () => {
                 <th className="p-5 text-right">Price</th>
                 <th className="p-5">Action</th>
               </tr>
-              ``
             </thead>
             <tbody>
               {cartItems.map((item) => (
@@ -103,7 +102,7 @@ const CartScreen = () => {
             <div className="card-actions justify-end">
               {price > 0 ? (
                 <button
-                  onClick={() => router.push('/shipping')}
+                  onClick={() => router.push('login?redirect=/shipping')}
                   className="btn btn-primary"
                 >
                   Check Out
