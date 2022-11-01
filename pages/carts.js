@@ -5,14 +5,16 @@ import { useRouter } from 'next/router';
 
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
+import dynamic from 'next/dynamic';
 // import { TiDeleteOutline } from 'react-icons/ti';
 
-const carts = () => {
+const CartScreen = () => {
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
   const {
     cart: { cartItems },
   } = state;
+
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
   };
@@ -45,6 +47,7 @@ const carts = () => {
                 <th className="p-5 text-right">Price</th>
                 <th className="p-5">Action</th>
               </tr>
+              ``
             </thead>
             <tbody>
               {cartItems.map((item) => (
@@ -122,4 +125,4 @@ const carts = () => {
   );
 };
 
-export default carts;
+export default dynamic(() => Promise.resolve(CartScreen), { ssr: false });
