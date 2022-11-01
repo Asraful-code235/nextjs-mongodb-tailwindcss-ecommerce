@@ -28,9 +28,9 @@ const ProductItem = ({ product }) => {
             <p className="">{product.brand}</p>
             <p>${product.price}</p>
 
-            <div className="card-actions justify-end">
+            {/* <div className="card-actions justify-end">
               <button className="btn btn-primary">Buy Now</button>
-            </div>
+            </div> */}
           </div>
         </div>
       </Link>
