@@ -1,10 +1,12 @@
 import { Menu } from '@headlessui/react';
-import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+// import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext, useState, useEffect } from 'react';
 import { Store } from '../utils/Store';
 
 const Navbar = () => {
+  const { status, data: session } = useSession();
   const { state } = useContext(Store);
   const { cart } = state;
 
@@ -53,55 +55,67 @@ const Navbar = () => {
             </label>
           </Menu>
           <Menu as="div" className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-              <Menu.Button
-                as="div"
-                className="w-10 rounded-full hover:bg-gray-300
+            {status === 'loading' ? (
+              '...'
+            ) : session?.user ? (
+              <div>
+                <label tabIndex={0} className="btn btn-ghost btn-circle ">
+                  <Menu.Button
+                    as="div"
+                    className="rounded-full w-auto text-xl   hover:bg-gray-300 capitalize grid place-items-center
               "
-              >
-                <Image
+                  >
+                    {session.user.name.charAt(0)}
+
+                    {/* <Image
                   src="https://placeimg.com/80/80/people"
                   alt="profile"
                   fill
                   className="rounded-full p-2 "
-                />
-              </Menu.Button>
-            </label>
-            <Menu.Items>
-              <ul
-                tabIndex={0}
-                className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <Menu.Item>
-                  {({ active }) => (
-                    <li>
-                      <a
-                        className={`justify-between ${
-                          active ? 'bg-gray-200' : ''
-                        }`}
-                      >
-                        Profile
-                        {/* <span className="badge">New</span> */}
-                      </a>
-                    </li>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <li className={`${active ? 'bg-gray-200' : ''}`}>
-                      <a>Settings</a>
-                    </li>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <li className={`${active ? 'bg-gray-200' : ''}`}>
-                      <a>Logout</a>
-                    </li>
-                  )}
-                </Menu.Item>
-              </ul>
-            </Menu.Items>
+                /> */}
+                  </Menu.Button>
+                </label>
+                <Menu.Items>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+                  >
+                    <Menu.Item>
+                      {({ active }) => (
+                        <li>
+                          <a
+                            className={`justify-between ${
+                              active ? 'bg-gray-200' : ''
+                            }`}
+                          >
+                            Profile
+                            {/* <span className="badge">New</span> */}
+                          </a>
+                        </li>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <li className={`${active ? 'bg-gray-200' : ''}`}>
+                          <a>Settings</a>
+                        </li>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <li className={`${active ? 'bg-gray-200' : ''}`}>
+                          <a>Logout</a>
+                        </li>
+                      )}
+                    </Menu.Item>
+                  </ul>
+                </Menu.Items>
+              </div>
+            ) : (
+              <Link href={'/login'}>
+                <p className="px-6 mx-2 btn btn-square btn-ghost">Login</p>
+              </Link>
+            )}
           </Menu>
         </div>
       </div>
