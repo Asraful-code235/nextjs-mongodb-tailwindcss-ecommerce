@@ -1,16 +1,23 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import Layout from '../../components/Layout';
-import data from '../../utils/data';
+import Product from '../../models/Product';
+// import data from '../../utils/data';
+import db from '../../utils/db';
 import { Store } from '../../utils/Store';
 
-export default function ProductScreen() {
+export default function ProductScreen(props) {
+  const { product } = props;
+  // console.log(props);
   const { state, dispatch } = useContext(Store);
-  const query = useRouter();
-  const slug = query.query['spug'];
-  const product = data.product.find((x) => x.slug === slug);
+  // const query = useRouter();
+
+  //this is for testing purpose only
+
+  // const slug = query.query['spug'];
+  // const product = data.product.find((x) => x.slug === slug);
   if (!product) {
     return <Layout title="Produt Not Found">Produt Not Found</Layout>;
   }
@@ -113,4 +120,18 @@ export default function ProductScreen() {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { slug } = params;
+
+  await db.connect();
+  const product = await Product.findOne({ slug }).lean();
+  await db.disconnect();
+  return {
+    props: {
+      product: product ? db.convertDocToObj(product) : null,
+    },
+  };
 }

@@ -65,7 +65,7 @@ export default function PaymentScreen() {
           <button
             onClick={() => router.push('/shipping')}
             type="button"
-            className="btn btn-primary"
+            className="btn btn-ghost"
           >
             Back
           </button>
