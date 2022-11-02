@@ -1,5 +1,6 @@
 import { Menu } from '@headlessui/react';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import Cookies from 'js-cookie';
 // import Image from 'next/image';
 import Link from 'next/link';
 import React, { useContext, useState, useEffect } from 'react';
@@ -7,7 +8,7 @@ import { Store } from '../utils/Store';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
-  const { state } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const { cart } = state;
 
   const [cartItemsCount, setCartItemsCount] = useState(0);
@@ -18,6 +19,12 @@ const Navbar = () => {
       setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
     };
   }, [cart.cartItems]);
+
+  const logOutClickHandler = () => {
+    Cookies.remove('cart');
+    dispatch({ type: 'CART_RESET' });
+    signOut({ callbackUrl: '/login' });
+  };
   return (
     <>
       <div className="navbar bg-base-100">
@@ -83,28 +90,31 @@ const Navbar = () => {
                     <Menu.Item>
                       {({ active }) => (
                         <li>
-                          <a
+                          <Link
+                            href={'/profile'}
                             className={`justify-between ${
                               active ? 'bg-gray-200' : ''
                             }`}
                           >
                             Profile
                             {/* <span className="badge">New</span> */}
-                          </a>
+                          </Link>
                         </li>
                       )}
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
                         <li className={`${active ? 'bg-gray-200' : ''}`}>
-                          <a>Settings</a>
+                          <Link href={'/order-history'}>Order History</Link>
                         </li>
                       )}
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <li className={`${active ? 'bg-gray-200' : ''}`}>
-                          <a>Logout</a>
+                        <li className={`${active ? 'bg-gray-200  ' : ''}`}>
+                          <Link onClick={logOutClickHandler} href={'#'}>
+                            Logout
+                          </Link>
                         </li>
                       )}
                     </Menu.Item>
