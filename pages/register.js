@@ -7,6 +7,7 @@ import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
 // import { info } from 'daisyui/src/colors/colorNames';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -21,11 +22,18 @@ export default function LoginScreen() {
   const {
     handleSubmit,
     register,
+    getValues,
     formState: { errors },
   } = useForm();
 
-  const submitHandler = async ({ email, password }) => {
+  const submitHandler = async ({ name, email, password }) => {
     try {
+      await axios.post('/api/auth/signup', {
+        name,
+        email,
+        password,
+      });
+
       const result = await signIn('credentials', {
         redirect: false,
         email,
@@ -40,13 +48,38 @@ export default function LoginScreen() {
   };
 
   return (
-    <Layout title={'Login'}>
+    <Layout title={'Create Account'}>
       <div className="grid place-items-center">
         <form
           onSubmit={handleSubmit(submitHandler)}
           className="mx-auto  p-6 border shadow-sm rounded-md max-w-screen-md flex flex-col items-start justify-center"
         >
-          <h1 className="mb-4 text-xl font-bold text-slate-500">Login</h1>
+          <h1 className="mb-4 text-xl font-bold text-slate-500">
+            Create Account
+          </h1>
+          <div className="mb-4 gap-4  w-full flex flex-col justify-between items-start">
+            <label
+              htmlFor="name"
+              className="font-semibold text-slate-400 capitalize"
+            >
+              Name
+            </label>
+            <input
+              {...register('name', {
+                required: 'Please enter name',
+              })}
+              placeholder="Enter you'r Name "
+              className="input input-bordered input-info w-full max-w-xs"
+              type="text"
+              id="name"
+              autoFocus
+            />
+            {errors.name && (
+              <div className="bg-red-100 w-full text-red-500 px-4 py-2 rounded-sm">
+                {errors.name.message}
+              </div>
+            )}
+          </div>
           <div className="mb-4 gap-4  w-full flex flex-col justify-between items-start">
             <label
               htmlFor="email"
@@ -66,7 +99,6 @@ export default function LoginScreen() {
               placeholder="Enter your email address"
               className="input flex  input-bordered input-info w-full max-w-xs"
               id="email"
-              autoFocus
             />
             {errors.email && (
               <div className="bg-red-100 w-full text-red-500 px-4 py-2 rounded-sm">
@@ -83,7 +115,7 @@ export default function LoginScreen() {
             </label>
             <input
               {...register('password', {
-                required: 'Please enter passworkd',
+                required: 'Please enter password',
                 minLength: {
                   value: 6,
                   message: 'password is more then 5 chars',
@@ -101,9 +133,43 @@ export default function LoginScreen() {
               </div>
             )}
           </div>
+          <div className="mb-4 gap-4  w-full flex flex-col justify-between items-start">
+            <label
+              htmlFor="confirmPassword"
+              className="font-semibold text-slate-400 capitalize"
+            >
+              Confirm password
+            </label>
+            <input
+              {...register('confirmPassword', {
+                required: 'Please enter passworkd',
+                validate: (value) => value === getValues('password'),
+                minLength: {
+                  value: 6,
+                  message: 'password is more then 5 chars',
+                },
+              })}
+              placeholder="Enter you'r password "
+              className="input input-bordered input-info w-full max-w-xs"
+              type="password"
+              id="confirmPassword"
+              autoFocus
+            />
+            {errors.confirmPassword && (
+              <div className="bg-red-100 w-full text-red-500 px-4 py-2 rounded-sm">
+                {errors.confirmPassword.message}
+              </div>
+            )}
+            {errors.confirmPassword &&
+              errors.confirmPassword.type === 'validate' && (
+                <div className="bg-red-100 w-full text-red-500 px-4 py-2 rounded-sm">
+                  Password do not match
+                </div>
+              )}
+          </div>
           <div className="mb-4">
             <button className="btn btn-warning px-6 text-slate-800">
-              Login
+              Register
             </button>
           </div>
           <div className="mb-4 text-slate-600">
