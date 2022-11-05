@@ -6,6 +6,9 @@ import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 import dynamic from 'next/dynamic';
+import axios from 'axios';
+
+import { toast } from 'react-toastify';
 // import { TiDeleteOutline } from 'react-icons/ti';
 
 const CartScreen = () => {
@@ -20,9 +23,14 @@ const CartScreen = () => {
   };
   const price = cartItems.reduce((a, c) => a + c.quantity * c.price, 0);
 
-  const updateCartHandler = (item, qty) => {
+  const updateCartHandler = async (item, qty) => {
     const quantity = Number(qty);
+    const { data } = await axios.get(`api/products/${item._id}`);
+    if (data.countInStock < quantity) {
+      return toast.error('Sorry .product is out of stock');
+    }
     dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+    toast.success('Product updated successfully');
   };
   return (
     <Layout title={'Shopping cart'}>
@@ -92,7 +100,7 @@ const CartScreen = () => {
             </tbody>
           </table>
         </div>
-        <div className="card w-62 bg-base-100 shadow-xl">
+        <div className="card w-62 bg-base-100 h-min shadow-xl">
           <div className="card-body">
             <h2 className="card-title border-b text-slate-800">Subtotal </h2>
             <p className="text-slate-600">

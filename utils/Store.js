@@ -1,4 +1,4 @@
-import { createContext, startTransition, useReducer } from 'react';
+import { createContext, useReducer } from 'react';
 import Cookies from 'js-cookie';
 
 export const Store = createContext();
@@ -13,12 +13,12 @@ function reducer(state, action) {
   switch (action.type) {
     case 'CART_ADD_ITEM': {
       const newItem = action.payload;
-      const exisItem = state.cart.cartItems.find(
+      const existItem = state.cart.cartItems.find(
         (item) => item.slug === newItem.slug
       );
-      const cartItems = exisItem
+      const cartItems = existItem
         ? state.cart.cartItems.map((item) =>
-            item.name === exisItem.name ? newItem : item
+            item.name === existItem.name ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
       Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
@@ -29,10 +29,9 @@ function reducer(state, action) {
         (item) => item.slug !== action.payload.slug
       );
       Cookies.set('cart', JSON.stringify({ ...state.cart, cartItems }));
-
-      return { ...state, cart: { ...startTransition.cart, cartItems } };
+      return { ...state, cart: { ...state.cart, cartItems } };
     }
-    case 'CART_RESET': {
+    case 'CART_RESET':
       return {
         ...state,
         cart: {
@@ -41,8 +40,10 @@ function reducer(state, action) {
           paymentMethod: '',
         },
       };
-    }
-    case 'SAVE_SHIPPING_ADDRESS': {
+    case 'CART_CLEAR_ITEMS':
+      return { ...state, cart: { ...state.cart, cartItems: [] } };
+
+    case 'SAVE_SHIPPING_ADDRESS':
       return {
         ...state,
         cart: {
@@ -53,8 +54,7 @@ function reducer(state, action) {
           },
         },
       };
-    }
-    case 'SAVE_PAYMENT_METHOD': {
+    case 'SAVE_PAYMENT_METHOD':
       return {
         ...state,
         cart: {
@@ -62,7 +62,6 @@ function reducer(state, action) {
           paymentMethod: action.payload,
         },
       };
-    }
     default:
       return state;
   }

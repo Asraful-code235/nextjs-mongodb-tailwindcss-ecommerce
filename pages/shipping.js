@@ -24,7 +24,7 @@ export default function ShippingScreen() {
     setValue('city', shippingAddress.city);
     setValue('postalCode', shippingAddress.postalCode);
     setValue('country', shippingAddress.country);
-  }, [setValue, shippingAddress.address]);
+  }, [setValue, shippingAddress]);
 
   const submitHandler = ({ fullName, address, city, postalCode, country }) => {
     dispatch({
