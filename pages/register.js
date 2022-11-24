@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { signIn, useSession } from 'next-auth/react';
+import { useForm } from 'react-hook-form';
 import Layout from '../components/Layout';
 import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
@@ -9,9 +9,11 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 
 export default function LoginScreen() {
+  const { data: session } = useSession();
+
   const router = useRouter();
   const { redirect } = router.query;
-  const { data: session } = useSession();
+
   useEffect(() => {
     if (session?.user) {
       router.push(redirect || '/');
@@ -24,7 +26,6 @@ export default function LoginScreen() {
     getValues,
     formState: { errors },
   } = useForm();
-
   const submitHandler = async ({ name, email, password }) => {
     try {
       await axios.post('/api/auth/signup', {
