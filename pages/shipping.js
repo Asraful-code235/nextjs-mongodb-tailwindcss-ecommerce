@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import CheckOutWizard from '../components/CheckOutWizard';
+// import CheckOutWizard from '../components/CheckOutWizard';
 import Layout from '../components/Layout';
 import { Store } from '../utils/Store';
 import Cookies from 'js-cookie';
@@ -48,7 +48,7 @@ export default function ShippingScreen() {
   };
   return (
     <Layout title={'Shipping Address'}>
-      <CheckOutWizard activeStep={1} />
+      {/* <CheckOutWizard activeStep={1} /> */}
       <form
         className="mx-auto max-w-screen-md"
         onSubmit={handleSubmit(submitHandler)}
