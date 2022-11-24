@@ -14,16 +14,17 @@ async function handler(req, res) {
     !password ||
     password.trim().length < 5
   ) {
-    res.send(422).json({ message: 'Validation error' });
-
+    res.status(422).json({
+      message: 'Validation error',
+    });
     return;
   }
 
   await db.connect();
-  const existingUser = await User.findOne({ email: email });
 
+  const existingUser = await User.findOne({ email: email });
   if (existingUser) {
-    res.status(422).json({ message: 'User exists already' });
+    res.status(422).json({ message: 'User exists already!' });
     await db.disconnect();
     return;
   }
@@ -38,7 +39,7 @@ async function handler(req, res) {
   const user = await newUser.save();
   await db.disconnect();
   res.status(201).send({
-    message: 'Created User!',
+    message: 'Created user!',
     _id: user._id,
     name: user.name,
     email: user.email,
