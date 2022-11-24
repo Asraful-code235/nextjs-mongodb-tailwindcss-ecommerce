@@ -53,7 +53,7 @@ export default function ProductScreen(props) {
               alt={product.name}
               width={330}
               height={330}
-              layout="responsive "
+              // layout="responsive "
             />
             <div className=" w-full items-start p-6 sm:p-0 md:p-0 lg:p-0">
               <ul className="list-none p-4">

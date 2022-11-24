@@ -27,6 +27,8 @@ const ProductItem = ({ product, addToCartHandler }) => {
               className="text-slate-500 gap-1"
             >
               <p className="">{product.brand}</p>
+            </Link>
+            <Link href={`/product/${product.slug}`}>
               <p>${product.price}</p>
             </Link>
 

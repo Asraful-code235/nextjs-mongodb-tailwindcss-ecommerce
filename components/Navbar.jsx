@@ -91,32 +91,10 @@ const Navbar = () => {
                   >
                     <Menu.Item>
                       {({ active }) => (
-                        <li>
-                          <Link
-                            href={'/profile'}
-                            className={`justify-between ${
-                              active ? 'bg-gray-200' : ''
-                            }`}
-                          >
-                            Profile
-                            {/* <span className="badge">New</span> */}
-                          </Link>
-                        </li>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <li className={`${active ? 'bg-gray-200' : ''}`}>
-                          <Link href={'/order-history'}>Order History</Link>
-                        </li>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
                         <li className={`${active ? 'bg-gray-200  ' : ''}`}>
-                          <Link onClick={logOutClickHandler} href={'#'}>
+                          <a onClick={logOutClickHandler} href={'#'}>
                             Logout
-                          </Link>
+                          </a>
                         </li>
                       )}
                     </Menu.Item>

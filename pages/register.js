@@ -5,7 +5,6 @@ import { signIn, useSession } from 'next-auth/react';
 import Layout from '../components/Layout';
 import { getError } from '../utils/error';
 import { toast } from 'react-toastify';
-// import { info } from 'daisyui/src/colors/colorNames';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
